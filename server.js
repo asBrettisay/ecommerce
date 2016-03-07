@@ -2,6 +2,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     products = require('./controllers/productsCtrl');
+
 app = express();
 
 app.use(bodyParser.json());
