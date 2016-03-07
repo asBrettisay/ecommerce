@@ -6,6 +6,7 @@ var express = require('express'),
 app = express();
 
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
 
 var port = 8005
 app.listen(port, function() {
