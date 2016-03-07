@@ -1,57 +1,31 @@
 var mongojs = require('mongojs'),
     db = mongojs('ecommerce'),
-    Products = db.collection('products'),
     ObjectId = mongojs.ObjectId;
 
 
 module.exports = {
   create: function(req, res, next) {
-    Products.insert(req.body, function(err, r) {
-      if (err) {
-        console.log(err)
-        res.status(500).send();
-      }
-      res.status(200).json(r);
-    })
+    console.log(req.body);
+    res.status(200).send();
   },
 
   index: function(req, res, next) {
-    Products.find(function(err, r) {
-      if (err) {
-        console.log(err)
-        res.status(500).send();
-      }
-      res.status(200).json(r);
-    })
+    console.log(req.body);
+    res.status(200).send();
   },
 
   show: function(req, res, next) {
-    Products.find({_id: ObjectId(req.params.id)}, function(err, r) {
-      if (err) {
-        console.log(err)
-        res.status(500).send();
-      }
-      res.status(200).json(r);
-    })
+    console.log(req.params);
+    res.status(200).send();
   },
 
   update: function(req, res, next) {
-    Products.update({_id: ObjectId(req.params.id)}, req.body, function(err, r) {
-      if (err) {
-        console.log(err)
-        res.status(500).send();
-      }
-      res.status(200).json(r)
-    })
+    console.log(req.params);
+    res.status(200).send();
   },
 
   delete: function(req, res, next) {
-    Products.remove({_id: ObjectId(req.params.id)}, function(err, r) {
-      if (err) {
-        console.log(err)
-        res.status(500).send();
-      }
-      res.status(200).json(r);
-    })
+    console.log(req.params);
+    res.status(200).send();
   }
 }
