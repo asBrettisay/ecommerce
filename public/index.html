@@ -8,13 +8,24 @@
   </head>
   <body>
 
-    <div class="container">
+    <div class="container" ng-controller="nav">
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="#">Home</li></a>
-            <li role="presentation"><a ui-sref="products">Products</li></a>
-            <li role="presentation"><a ui-sref="admin">Admin</li></a>
+
+            <li role="presentation"
+            ng-class="{active: isActive('home')}"
+            ><a href="#">Home</li></a>
+
+            <li role="presentation"
+            ng-class="{active: isActive('products')}"
+            ><a ui-sref="products">Products</li></a>
+
+            <li
+            role="presentation"
+            ng-class="{active: isActive('admin')}"
+            ><a ui-sref="admin">Admin</li></a>
+
           </ul>
         </nav>
       </div>
@@ -39,6 +50,7 @@
     <!-- Controllers -->
     <script src="./controllers/mainCtrl.js" charset="utf-8"></script>
     <script src="./controllers/productsCtrl.js" charset="utf-8"></script>
+    <script src="./controllers/nav.js" charset="utf-8"></script>
 
     <!-- Services -->
     <script src="./services/productsService.js" charset="utf-8"></script>

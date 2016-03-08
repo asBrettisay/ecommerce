@@ -1,8 +1,10 @@
-<div class="row marketing">
+<div ng-repeat="product in products" class="row marketing">
   <div class="col-lg-6">
-    <h4>Products</h4>
+    <h4>{{product.name}} - {{product.price}}</h4>
+
+
     <p>
-      {{products}}
+      {{product.description}}
     </p>
   </div>
 </div>
