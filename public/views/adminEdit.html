@@ -56,8 +56,23 @@
         ></textarea>
 
       </div>
+
+
       <button ng-click="updateProduct(product)" type="submit" class="btn btn-primary">Submit</button>
       <button type="submit" ng-click="cancelForm()" class="btn btn-default">Cancel</button>
+
+
+
     </form>
+
+
+
+  </div>
+  <div ng-show="alertSuccess" class="alert top-buffer alert-success fade in" ng-model="success" flash-message>Success!
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  </div>
+
+  <div ng-show="alertError" class="alert top-buffer alert-danger fade in"  flash-message message="alertError">Error!
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
   </div>
 </div>

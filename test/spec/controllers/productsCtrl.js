@@ -2,25 +2,22 @@ process.env.NODE_ENV = 'test';
 
 var chai = require('chai'),
     chaiHttp = require('chai-http'),
-    server = require('../../../'),
+    server = require('../../../server'),
     should = chai.should(),
     expect = chai.expect,
-    mongojs = require('mongojs'),
-    db = mongojs('ecommerce'),
-    Products = db.collection('products'),
-    ObjectId = mongojs.ObjectId;
+    Product = require('../../../models/product');
 
 chai.use(chaiHttp);
 
 describe('productsCtrl', function() {
 
 
-  var testProduct = {
+  var car = {
     name: 'Car',
     price: '$999',
     description: 'A powerful and virtuous car'
   };
-  var newProduct = {
+  var sandwich = {
       name: 'Sandwich',
       price: '$0.99',
       description: 'A powerful and humble sandwich',
@@ -29,30 +26,30 @@ describe('productsCtrl', function() {
   var testId;
 
 
-  Products.drop();
+  Product.collection.drop();
 
   beforeEach(function(done) {
-    Products.insert(newProduct, function(err, res) {
-      testId = res._id;
+    var newProduct = new Product(sandwich)
+
+    testId = newProduct._id;
+    newProduct.save(function(err, s) {
+      if (err) {
+        console.log(err);
+      }
       done();
     })
   });
   afterEach(function(done) {
-    Products.drop();
+    Product.collection.drop();
     done();
   });
 
 
   it('should create a product', function(done) {
-    var testProduct = {
-      name: 'Car',
-      price: '$999',
-      description: 'A powerful and virtuous car'
-    }
 
     chai.request(server)
       .post('/products')
-      .send(testProduct)
+      .send(car)
       .end(function(err, res) {
         res.should.have.status(200);
         res.should.be.json;
@@ -61,8 +58,22 @@ describe('productsCtrl', function() {
         res.body.should.have.property('name');
         res.body.should.have.property('description');
         res.body.should.have.property('price');
-        res.body.name.should.equal(testProduct.name);
-        done();
+        res.body.name.should.equal(car.name);
+        var carId = res.body._id;
+
+
+        Product.findById(carId, function(err, s) {
+          if (err) {
+            console.log(err);
+          } else {
+            s.should.have.property('_id');
+            s.should.have.property('name');
+            s.should.have.property('description');
+            s.should.have.property('price');
+            s.name.should.equal(car.name);
+            done();
+          }
+        })
       });
   });
 
@@ -88,8 +99,8 @@ describe('productsCtrl', function() {
         }
         res.should.have.status(200);
         res.should.be.json;
-        res.body[0].should.have.property('name');
-        res.body[0].name.should.equal(newProduct.name);
+        res.body.should.have.property('name');
+        res.body.name.should.equal(sandwich.name);
         done();
       })
   });
@@ -101,13 +112,13 @@ describe('productsCtrl', function() {
         res.should.have.status(200);
         res.should.be.json;
 
-        Products.find({_id: ObjectId(testId)}, function(err, dbRes) {
+        Product.find({_id: testId}, function(err, dbRes) {
           dbRes.should.be.a('array');
           dbRes[0].should.be.a('object');
           dbRes[0].should.have.property('name');
           dbRes[0].should.have.property('price');
           dbRes[0].name.should.equal('porsche');
-          dbRes[0].price.should.equal(newProduct.price);
+          dbRes[0].price.should.equal(sandwich.price);
           done();
         })
       })
@@ -118,7 +129,7 @@ describe('productsCtrl', function() {
       .end(function(err, res) {
         res.should.have.status(200);
 
-        Products.find({_id: ObjectId(testId)}, function(err, res) {
+        Product.find({_id: testId}, function(err, res) {
           res.should.be.a('array');
           expect(res[0]).to.equal(undefined);
           done();
@@ -126,4 +137,46 @@ describe('productsCtrl', function() {
       })
 
   });
+
+
+
+
+  it.skip('should not allow duplicate names of products', function(done) {
+    chai.request(server)
+      .post('/products')
+      .send(sandwich)
+      .end(function(err, res) {
+        if (err) {
+          console.log(err)
+        } else {
+          res.should.have.status(200);
+
+          chai.request(server)
+            .post('/products')
+            .send(sandwich)
+            .end(function(err, res) {
+              if (err) {
+                // console.log(err);
+                done();
+              } else {
+                res.should.have.status(500);
+                done();
+              }
+            })
+
+          Product.find({name: sandwich.name}, function(err, res) {
+            if (err) {
+              console.log(err)
+            } else {
+              res.should.be.a('array');
+              console.log(res);
+              res.length.should.equal(1);
+              done();
+            }
+          })
+        }
+      })
+  })
+
+
 })

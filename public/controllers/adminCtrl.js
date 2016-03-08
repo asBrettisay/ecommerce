@@ -3,7 +3,11 @@ angular.module('ecommerce')
   $scope.showNewProduct = false;
 
   $scope.newProduct = function(product) {
-    productsService.newProduct(product);
+    productsService.newProduct(product).then(function(response) {
+      if (response === 'Error') {
+        $scope.alertError = 'Error';
+      }
+    })
     $scope.showNewProduct = false;
     $scope.product = {};
   }

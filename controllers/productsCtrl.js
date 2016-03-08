@@ -1,60 +1,61 @@
-var mongojs = require('mongojs'),
-    db = mongojs('ecommerce'),
-    Products = db.collection('products'),
-    ObjectId = mongojs.ObjectId;
+var mongoose = require('mongoose'),
+    ObjectId = mongoose.Schema.ObjectId,
+    Product = require('../models/product');
 
 
 module.exports = {
+
   create: function(req, res, next) {
-    Products.insert(req.body, function(err, r) {
-      if (err) {
-        console.log(err)
-        res.status(500).send();
-      }
-      res.status(200).json(r);
-    })
-  },
-
-  index: function(req, res, next) {
-    Products.find(function(err, r) {
-      if (err) {
-        console.log(err)
-        res.status(500).send();
-      }
-      res.status(200).json(r);
-    })
-  },
-
-  show: function(req, res, next) {
-    console.log(req.params.id);
-    Products.find({_id: ObjectId(req.params.id)}, function(err, r) {
-      if (err) {
-        console.log(err)
-        res.status(500).send();
-      }
-      res.status(200).json(r);
-    })
-  },
-
-  update: function(req, res, next) {
-    delete(req.body._id);
-    Products.update({_id: ObjectId(req.params.id)}, {$set: req.body}, function(err, r) {
+    var newProduct = new Product(req.body)
+    newProduct.save(function(err, s) {
       if (err) {
         console.log(err)
         res.status(500).send();
       } else {
-        res.status(200).json(r)
+        res.status(200).json(s);
+      }
+    })
+  },
+
+  index: function(req, res, next) {
+    Product.find(function(err, s) {
+      if (err) {
+        res.status(500).send();
+      } else {
+        res.status(200).json(s);
+      }
+    })
+  },
+
+  show: function(req, res, next) {
+    Product.findById(req.params.id, function(err, s) {
+      if (err) {
+        console.log(err);
+        res.status(500).send();
+      } else {
+        res.status(200).send(s);
+      }
+    })
+  },
+
+  update: function(req, res, next) {
+    Product.update({_id: req.params.id}, req.body, function(err, s) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(s);
       }
     })
   },
 
   delete: function(req, res, next) {
-    Products.remove({_id: ObjectId(req.params.id)}, function(err, r) {
+    Product.remove({_id: req.params.id}, function(err, s) {
       if (err) {
-        console.log(err)
+        console.log(err);
         res.status(500).send();
+      } else {
+        res.status(200).send(s);
       }
-      res.status(200).json(r);
     })
   }
 }

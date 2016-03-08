@@ -24,7 +24,12 @@
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "mocha": "^2.4.5",
-    "mongojs": "^2.3.0",
     "mongoose": "^4.4.6"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-jasmine": "^0.3.7"
   }
 }

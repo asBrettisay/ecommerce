@@ -1,13 +1,11 @@
-var mongoose = require('mongoose'),
-    mongojs = require('mongojs');
+var mongoose = require('mongoose');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var productSchema = new mongoose.Schema({
-  name: String,
-  price: String,
-  description: String,
-  _id: ObjectId
+  name: {type: String, unique: true, index: true},
+  price: {type: String, required: true},
+  description: {type: String, required: true, min: 0}
 })
 
 module.exports = mongoose.model('product', productSchema);

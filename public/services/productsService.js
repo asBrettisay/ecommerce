@@ -9,17 +9,31 @@ angular.module('ecommerce')
       method: 'GET',
       url: '/products'
     }).then(function(data) {
-      return data.data;
+      if (data.status === 200) {
+        return data.data
+      } else {
+        console.log(data.status);
+        return 'Error';
+      }
+    }, function(err) {
+      return err;
     })
   }
 
 
 
   this.newProduct = function(product) {
-    $http({
+    return $http({
       method: 'POST',
       url: '/products',
       data: product
+    }).then(function(r) {
+      console.log(r.status);
+      if (r.status === 200) {
+        return r.data;
+      } else {
+        return 'Error';
+      }
     })
   },
 
