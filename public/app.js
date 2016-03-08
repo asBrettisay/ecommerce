@@ -14,7 +14,6 @@ angular.module('ecommerce', ['ui.router'])
       controller: 'productsCtrl',
       resolve: {
         products: function(productsService) {
-          console.log('Get here!');
           return productsService.getProducts();
         }
       }
