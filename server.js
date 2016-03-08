@@ -1,9 +1,21 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
-    products = require('./controllers/productsCtrl');
+    products = require('./controllers/productsCtrl'),
+    config = require('./_config'),
+    mongoose = require('mongoose');
+
 
 app = express();
+
+mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+  if (err) {
+    console.log('Error connecting to the database. ' + err);
+  } else {
+    console.log('Connected to database: ' + config.mongoURI[app.settings.env])
+  }
+})
+
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
@@ -22,3 +34,5 @@ app.get('/products/:id', products.show);
 app.put('/products/:id', products.update);
 
 app.delete('/products/:id', products.delete);
+
+module.exports = app;

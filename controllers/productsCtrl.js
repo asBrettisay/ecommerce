@@ -26,6 +26,7 @@ module.exports = {
   },
 
   show: function(req, res, next) {
+    console.log(req.params.id);
     Products.find({_id: ObjectId(req.params.id)}, function(err, r) {
       if (err) {
         console.log(err)
