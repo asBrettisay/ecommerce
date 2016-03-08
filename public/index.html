@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>DevMountain eCommerce</title>
     <link rel="stylesheet" href="style/bootstrap.css">
+    <link rel="stylesheet" href="style/main.css">
   </head>
   <body>
 
@@ -12,19 +13,19 @@
         <nav>
           <ul class="nav nav-pills">
             <li role="presentation" class="active"><a href="#">Home</li></a>
-            <li role="presentation"><a href="#">Products</li></a>
-            <li role="presentation"><a href="#">Admin</li></a>
+            <li role="presentation"><a ui-sref="products">Products</li></a>
+            <li role="presentation"><a ui-sref="admin">Admin</li></a>
           </ul>
         </nav>
       </div>
     </div>
 
 
-    <div class="container">
+
 
       <ui-view></ui-view>
 
-    </div>
+
 
 
     <script src="./bower_components/angular/angular.js" charset="utf-8"></script>
@@ -41,6 +42,7 @@
 
     <!-- Services -->
     <script src="./services/productsService.js" charset="utf-8"></script>
+    <script src="./controllers/adminCtrl.js" charset="utf-8"></script>
 
   </body>
 </html>

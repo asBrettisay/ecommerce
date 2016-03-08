@@ -14,8 +14,14 @@ angular.module('ecommerce', ['ui.router'])
       controller: 'productsCtrl',
       resolve: {
         products: function(productsService) {
-          productsService.getProducts();
+          console.log('Get here!');
+          return productsService.getProducts();
         }
       }
+    })
+    .state('admin', {
+      url: '/admin',
+      templateUrl: './views/admin.html',
+      controller: 'adminCtrl'
     })
 })
