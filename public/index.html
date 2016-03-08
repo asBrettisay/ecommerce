@@ -24,7 +24,10 @@
             <li
             role="presentation"
             ng-class="{active: isActive('admin')}"
-            ><a ui-sref="admin">Admin</li></a>
+            ><a
+            ui-sref="admin"
+            ui-sref-opts="{reload: true}"
+            >Admin</li></a>
 
           </ul>
         </nav>

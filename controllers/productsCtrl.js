@@ -36,12 +36,14 @@ module.exports = {
   },
 
   update: function(req, res, next) {
-    Products.update({_id: ObjectId(req.params.id)}, req.body, function(err, r) {
+    delete(req.body._id);
+    Products.update({_id: ObjectId(req.params.id)}, {$set: req.body}, function(err, r) {
       if (err) {
         console.log(err)
         res.status(500).send();
+      } else {
+        res.status(200).json(r)
       }
-      res.status(200).json(r)
     })
   },
 

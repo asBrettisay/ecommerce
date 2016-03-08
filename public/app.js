@@ -23,4 +23,7 @@ angular.module('ecommerce', ['ui.router'])
       templateUrl: './views/admin.html',
       controller: 'adminCtrl'
     })
+    .state('admin.edit', {
+      templateUrl: './views/adminEdit.html'
+    })
 })
