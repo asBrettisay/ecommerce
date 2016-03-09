@@ -19,9 +19,12 @@ module.exports = function(config) {
       'public/bower_components/angular-ui-router/release/angular-ui-router.js',
       'public/bower_components/angular-mocks/angular-mocks.js',
       'public/app.js',
+      'public/directives/flashMessage.js',
       'public/controllers/*.js',
       'public/services/*',
       'public/test/spec/controllers/adminCtrl.js',
+      'public/test/spec/directives/*.js',
+
     ],
 
 

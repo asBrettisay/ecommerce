@@ -32,7 +32,7 @@ describe('adminCtrl', function() {
   it('should edit a product', function(done) {
     $httpBackend.expectGET('/products').respond({status:200, data: testProduct})
 
-    scope.editProducts()
+    admin.editProducts()
 
     expect(scope.editMode).toEqual(true);
     done();
@@ -40,7 +40,7 @@ describe('adminCtrl', function() {
 
   it('should update a product', function(done) {
     $httpBackend.expectPUT('/products/123').respond({status:200, data: testProduct})
-    scope.updateProduct(testProduct);
+    admin.updateProduct(testProduct);
     done()
 
     expect(scope.editProductForm).toEqual(false);
@@ -50,13 +50,13 @@ describe('adminCtrl', function() {
   it('should delete a product', function(done) {
     $httpBackend.expectDELETE('/products/123').respond({status: 200, data: testProduct})
 
-    scope.deleteProduct('123');
+    admin.deleteProduct('123');
     done()
     expect(scope.editMode).toEqual(false);
   })
 
   it('should cancelForm', function() {
-    scope.cancelForm();
+    admin.cancelForm();
 
     expect(scope.editMode).toEqual(false);
   })
