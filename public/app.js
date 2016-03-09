@@ -12,6 +12,7 @@ angular.module('ecommerce', ['ui.router'])
       url: '/products',
       templateUrl: './views/products.html',
       controller: 'productsCtrl',
+      controllerAs: 'vw',
       resolve: {
         products: function(productsService) {
           return productsService.getProducts();
@@ -26,5 +27,11 @@ angular.module('ecommerce', ['ui.router'])
     })
     .state('admin.edit', {
       templateUrl: './views/adminEdit.html'
+    })
+    .state('cart', {
+      url: '/cart',
+      templateUrl: './views/cart.html',
+      controller: 'cartCtrl',
+      controllerAs: 'cart'
     })
 })

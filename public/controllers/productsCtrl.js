@@ -1,4 +1,8 @@
 angular.module('ecommerce')
 .controller('productsCtrl', function($scope, products) {
-  $scope.products = products;
+  this.products = products;
+
+  this.addToCart = function (product) {
+    //service to add to Card.
+  }
 })

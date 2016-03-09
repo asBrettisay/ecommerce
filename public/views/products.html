@@ -2,8 +2,8 @@
 
 
 
-  <div ng-repeat="product in products" class="row marketing">
-    <div class="col-lg-6">
+  <div ng-repeat="product in vw.products" class="row">
+    <div class="inline col-md-4">
       <h4>{{product.name}} - {{product.price}}</h4>
 
 
@@ -11,5 +11,17 @@
         {{product.description}}
       </p>
     </div>
+
+
+    <div class="inline col-md-4">
+      <div
+      ng-click="vw.addToCart(product)"
+      class="btn btn-primary"
+      >
+        Add to cart
+      </div>
+    </div>
+
+
   </div>
 </div>
