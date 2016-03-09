@@ -1,5 +1,5 @@
 angular.module('ecommerce')
-.service('productsService', function($http) {
+.service('productsService', function($http, $q) {
 
 
 
@@ -9,12 +9,7 @@ angular.module('ecommerce')
       method: 'GET',
       url: '/products'
     }).then(function(data) {
-      if (data.status === 200) {
-        return data.data
-      } else {
-        console.log(data.status);
-        return 'Error';
-      }
+      return data.data
     }, function(err) {
       return err;
     })

@@ -28,6 +28,7 @@ module.exports = {
   },
 
   show: function(req, res, next) {
+    console.log(req.params)
     Product.findById(req.params.id, function(err, s) {
       if (err) {
         console.log(err);
@@ -41,7 +42,7 @@ module.exports = {
   update: function(req, res, next) {
     Product.update({_id: req.params.id}, req.body, function(err, s) {
       if (err) {
-        res.status(500).send(err);
+        res.status(200).send(err);
       } else {
         res.status(200).send(s);
       }

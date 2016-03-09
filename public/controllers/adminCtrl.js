@@ -2,7 +2,7 @@ angular.module('ecommerce')
 .controller('adminCtrl', function($scope, productsService, $state) {
   $scope.showNewProduct = false;
 
-  $scope.newProduct = function(product) {
+  this.newProduct = function(product) {
     productsService.newProduct(product).then(function(response) {
       if (response === 'Error') {
         $scope.alertError = 'Error';
@@ -22,7 +22,7 @@ angular.module('ecommerce')
 
   $scope.updateProduct = function(product) {
     productsService.updateProduct(product).then(function(response) {
-      $state.editProductForm = false;
+      $scope.editProductForm = false;
       console.log(response);
       $state.go('admin.edit', {}, {reload: true})
     })
