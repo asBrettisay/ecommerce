@@ -31,13 +31,14 @@ app.listen(port, function() {
 
 app.post('/products', products.create);
 app.post('/api/user', users.create);
-app.post('/api/order/:user_id', orders.create);
-app.post('/api/cart/:user_id', cart.create);
+app.post('/api/order/:id', orders.create);
+app.post('/api/cart/:id', cart.create);
 
 app.get('/products', products.index);
 app.get('/products/:id', products.show);
 app.get('/api/order', orders.show);
 app.get('/api/user/:id', users.show);
+app.get('/api/cart/:id', cart.show);
 
 app.put('/products/:id', products.update);
 app.put('/api/cart/:user_id', cart.update);

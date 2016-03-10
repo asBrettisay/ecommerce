@@ -55,10 +55,6 @@ describe('userCtrl', function() {
         user.email.should.equal(testUser.email);
         user.should.have.property('password');
         user.password.should.equal(testUser.password);
-        user.should.have.property('cart');
-        user.should.have.property('orders');
-        user.cart.should.be.a('array');
-        user.orders.should.be.a('array');
         done();
       })
   })
@@ -81,10 +77,7 @@ describe('userCtrl', function() {
       user.email.should.equal(newUser.email);
       user.should.have.property('password');
       user.password.should.equal(newUser.password);
-      user.should.have.property('cart');
-      user.cart.should.be.a('array');
-      user.should.have.property('orders');
-      user.orders.should.be.a('array');
+    
       user.should.have.property('_id');
 
       User.findById(user._id, (err, s) => {

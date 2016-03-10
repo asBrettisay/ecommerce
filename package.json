@@ -27,6 +27,7 @@
     "mongoose": "^4.4.6"
   },
   "devDependencies": {
+    "bluebird": "^3.3.4",
     "faker": "^3.0.1",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",

@@ -1,13 +1,20 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 const User = require('../models/User');
+const Cart = require('../models/Cart');
 
 module.exports = {
 
   create: (req, res, next) => {
-    User.findByIdAndUpdate(req.params.user_id, {$push: req.body})
-    .then((err, s) => {
-      err ? res.status(500).send(err) : res.status(200).send(s);
+    Cart.create(req.body, (err, cart) => {
+      return err ? console.log(err) : cart;
+    })
+    .then((cart) => {
+      User.findByIdAndUpdate(req.params.id, {cart: cart._id})
+      .then((err, s) => {
+
+        return err ? res.status(500).send(err) : res.status(200).send(s);
+      })
     })
   },
 
@@ -21,5 +28,17 @@ module.exports = {
         })
       })
     }
+  },
+
+  show: (req, res, next) => {
+
+    User.findById(req.params.id)
+    .then((user) => {
+      Cart.findById(user.cart)
+      .populate('item')
+      .exec((err, cart) => {
+        err ? res.status(500).send(err) : res.status(200).send(cart);
+      })
+    })
   }
 }
