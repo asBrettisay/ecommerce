@@ -5,7 +5,8 @@ var chai = require('chai'),
     server = require('../../../server'),
     should = chai.should(),
     expect = chai.expect,
-    Product = require('../../../models/product');
+    Product = require('../../../models/product'),
+    faker = require('faker');
 
 chai.use(chaiHttp);
 
@@ -13,9 +14,9 @@ describe('productsCtrl', function() {
 
 
   var car = {
-    name: 'Car',
-    price: '$999',
-    description: 'A powerful and virtuous car'
+    name: faker.commerce.productName(),
+    price: faker.commerce.price(),
+    description: faker.lorem.sentence()
   };
   var sandwich = {
       name: 'Sandwich',

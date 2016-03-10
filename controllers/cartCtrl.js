@@ -20,14 +20,39 @@ module.exports = {
 
 
   update: (req, res, next) => {
+
     if (req.query.quantity === 0) {
       User.findById(req.params.user_id)
-      .then((err, s) => {
+      .then((s) => {
+        console.log('User query result', s);
         s.cart.pull(req.query.name).save((err, success) => {
           err ? res.status(500).send(err) : res.status(200).send(success);
         })
       })
+      .catch((error) => {
+        console.log(error)
+      })
     }
+
+
+
+    User.findById(req.params.id)
+    .then((user) => {
+      return Cart.findById(user.cart);
+    })
+
+
+    .then((cart) => {
+      cart.products.push(req.body._id);
+      cart.save()
+      res.status(200).send();
+    })
+
+
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send();
+    })
   },
 
   show: (req, res, next) => {

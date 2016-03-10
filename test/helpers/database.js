@@ -5,6 +5,7 @@ const Promise = require('bluebird');
 const User = require('../../models/User');
 const Cart = require('../../models/Cart');
 const Product = require('../../models/product');
+const Order = require('../../models/Order');
 
 
 
@@ -70,13 +71,22 @@ module.exports = {
 
   },
 
+  makeFakeProduct() {
+    return Product.create({
+      name: faker.commerce.productName(),
+      price: faker.commerce.price(),
+      description: faker.lorem.sentence()
+    })
+  },
+
   clearDatabase() {
 
     let userP = User.remove({}).exec()
     let cartP = Cart.remove({}).exec()
     let productP = Product.remove({}).exec()
+    let orderP = Order.remove({}).exec()
 
-    return Promise.join(productP, userP, cartP);
+    return Promise.join(productP, userP, cartP, orderP);
   },
 
   beforeCartCtrlTests: () => {

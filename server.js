@@ -41,7 +41,7 @@ app.get('/api/user/:id', users.show);
 app.get('/api/cart/:id', cart.show);
 
 app.put('/products/:id', products.update);
-app.put('/api/cart/:user_id', cart.update);
+app.put('/api/cart/:id', cart.update);
 
 app.delete('/products/:id', products.delete);
 

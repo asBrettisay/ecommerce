@@ -49,8 +49,6 @@ describe('cartCtrl', () => {
           }
 
           Cart.create(testCart)
-
-
           .then((cart) => {
             testUser.cart = cart._id;
             return testUser;
@@ -66,6 +64,13 @@ describe('cartCtrl', () => {
           })
 
       })
+    })
+  })
+
+  afterEach((done) => {
+    testHelper.clearDatabase()
+    .then(() => {
+      done();
     })
   })
 
@@ -115,6 +120,30 @@ describe('cartCtrl', () => {
         done();
       })
     })
+  })
+
+  var testProduct;
+  before((done) => {
+    testProduct = Product.create(testHelper.makeFakeProduct())
+    .then(() => {
+      done();
+    })
+    .catch((error) => {
+      console.log(error);
+      done();
+    })
+  })
+
+  it('should update a cart with a product', (done) => {
+    chai.request(server)
+      .put('/api/cart/' + testUser._id)
+      .send(testProduct)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.should.be.a('object');
+        res.should.have.property('body');
+        done();
+      })
   })
 
 })
