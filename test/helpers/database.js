@@ -4,7 +4,7 @@ const faker = require('faker');
 const Promise = require('bluebird');
 const User = require('../../models/User');
 const Cart = require('../../models/Cart');
-const Product = require('../../models/product');
+const Product = require('../../models/Product');
 const Order = require('../../models/Order');
 
 
@@ -16,21 +16,32 @@ module.exports = {
   makeFakeProductsAndSave() {
     //Make a cart of fake products, each product registered exists in the database.
     for (var i = 0, defer = []; i < 4; i++) {
-      let p = Product.create({
-        name: faker.commerce.productName(),
-        price: faker.commerce.price(),
+      let fakeObj = {
+        price: faker.commerce.price().toString(),
+        name: faker.commerce.productName().toString(),
         description: faker.lorem.sentence()
+      }
+
+      let p = new Product({
+        price: fakeObj.price,
+        name: fakeObj.name,
+        description: fakeObj.description
       })
-      defer.push(p);
+      defer.push(p.save());
     }
 
     return Promise.all(defer).then((arr) => {
-      return arr = arr.map(function(item) {
+      arr = arr.map(function(item) {
+
         return {
           item: item._id,
           quantity: 1,
         }
       })
+      return arr;
+    })
+    .catch((error) => {
+      console.log(error);
     })
   },
 
@@ -45,6 +56,7 @@ module.exports = {
   },
 
   makeFakeCartAndSave() {
+    // Make a fake cart, register it in the database.
     return this.makeFakeProductsAndSave().then((products) => {
       let newCart = new Cart({
         products: products
@@ -58,7 +70,7 @@ module.exports = {
 
   makeUserWithCartAndSave() {
   let newUser, newCart;
-
+    // Make a fake cart, user, and add cart ID to user.
     return this.makeFakeUserAndSave().then((user) => {
       newUser = user;
       return this.makeFakeCartAndSave().then((cart) => {
@@ -89,7 +101,11 @@ module.exports = {
     return Promise.join(productP, userP, cartP, orderP);
   },
 
-  beforeCartCtrlTests: () => {
-
+  makeCartObject() {
+    return this.makeFakeProductsAndSave().then((products) => {
+      return {
+        products: products
+      }
+    })
   }
 };

@@ -8,4 +8,4 @@ var productSchema = new mongoose.Schema({
   description: {type: String, required: true, min: 0}
 })
 
-module.exports = mongoose.model('product', productSchema);
+module.exports = mongoose.model('Product', productSchema);

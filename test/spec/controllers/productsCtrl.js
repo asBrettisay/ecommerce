@@ -5,7 +5,7 @@ var chai = require('chai'),
     server = require('../../../server'),
     should = chai.should(),
     expect = chai.expect,
-    Product = require('../../../models/product'),
+    Product = require('../../../models/Product'),
     faker = require('faker');
 
 chai.use(chaiHttp);
@@ -95,9 +95,7 @@ describe('productsCtrl', function() {
     chai.request(server)
       .get('/products/' + testId)
       .end(function(err, res) {
-        if (err) {
-          console.log(err);
-        }
+      
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.have.property('name');

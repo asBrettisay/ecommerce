@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 const User = require('../models/User');
 const Order = require('../models/Order');
-const productSchema = require('../models/productSchema');
-const Product = require('../models/product');
+const Product = require('../models/Product');
 
 module.exports = {
   create: (req, res, next) => {

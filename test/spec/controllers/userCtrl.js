@@ -7,7 +7,7 @@ const chaiHttp = require('chai-http');
 const server = require('../../../server');
 const should = chai.should();
 const expect = chai.expect;
-const Product = require('../../../models/product');
+const Product = require('../../../models/Product');
 const faker = require('faker');
 const User = require('../../../models/User');
 
@@ -77,7 +77,7 @@ describe('userCtrl', function() {
       user.email.should.equal(newUser.email);
       user.should.have.property('password');
       user.password.should.equal(newUser.password);
-    
+
       user.should.have.property('_id');
 
       User.findById(user._id, (err, s) => {

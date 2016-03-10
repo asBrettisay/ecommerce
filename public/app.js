@@ -28,10 +28,18 @@ angular.module('ecommerce', ['ui.router'])
     .state('admin.edit', {
       templateUrl: './views/adminEdit.html'
     })
+    .state('admin.newUser', {
+      templateUrl: './views/adminNewUser.html'
+    })
     .state('cart', {
       url: '/cart',
       templateUrl: './views/cart.html',
       controller: 'cartCtrl',
-      controllerAs: 'cart'
+      controllerAs: 'cart',
+      resolve: {
+        cart: function(cartService) {
+          return cartService.getUserCart();
+        }
+      }
     })
 })

@@ -7,7 +7,7 @@ const chaiHttp = require('chai-http');
 const server = require('../../../server');
 const should = chai.should();
 const expect = chai.expect;
-const Product = require('../../../models/product');
+const Product = require('../../../models/Product');
 const faker = require('faker');
 const User = require('../../../models/User');
 const Cart = require('../../../models/Cart');
@@ -71,7 +71,6 @@ describe('orderCtrl', () => {
         if (err) console.log(err);
         res.should.have.status(200);
         res.should.be.a('object');
-        console.log(res.body);
         done();
       })
   });

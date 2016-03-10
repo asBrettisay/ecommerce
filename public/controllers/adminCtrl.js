@@ -37,4 +37,8 @@ angular.module('ecommerce')
     $scope.editMode = false;
     $state.go('admin', {}, {reload: true});
   }
+
+  this.newUser = function(user) {
+    userService.newUser(user);
+  }
 })

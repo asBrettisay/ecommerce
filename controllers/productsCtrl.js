@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
     ObjectId = mongoose.Schema.ObjectId,
-    Product = require('../models/product');
+    Product = require('../models/Product');
 
 
 module.exports = {
@@ -28,7 +28,6 @@ module.exports = {
   },
 
   show: function(req, res, next) {
-    console.log(req.params)
     Product.findById(req.params.id, function(err, s) {
       if (err) {
         console.log(err);
