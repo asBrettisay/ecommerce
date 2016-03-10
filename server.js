@@ -3,7 +3,10 @@ var express = require('express'),
     cors = require('cors'),
     products = require('./controllers/productsCtrl'),
     config = require('./_config'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    users = require('./controllers/userCtrl'),
+    orders = require('./controllers/orderCtrl'),
+    cart = require('./controllers/cartCtrl');
 
 
 app = express();
@@ -27,11 +30,17 @@ app.listen(port, function() {
 
 
 app.post('/products', products.create);
+app.post('/api/user', users.create);
+app.post('/api/order/:user_id', orders.create);
+app.post('/api/cart/:user_id', cart.create);
 
 app.get('/products', products.index);
 app.get('/products/:id', products.show);
+app.get('/api/order', orders.show);
+app.get('/api/user/:id', users.show);
 
 app.put('/products/:id', products.update);
+app.put('/api/cart/:user_id', cart.update);
 
 app.delete('/products/:id', products.delete);
 
