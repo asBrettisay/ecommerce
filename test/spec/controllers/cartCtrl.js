@@ -12,60 +12,19 @@ const faker = require('faker');
 const User = require('../../../models/User');
 const Cart = require('../../../models/Cart');
 const Promise = require('bluebird');
+const testHelper = require('../../helpers/database');
 
 chai.use(chaiHttp);
 
+
+
+
+
+
 describe('cartCtrl', () => {
 
-
-  function newFakeProducts() {
-
-    //Make a cart of fake products, each product registered exists in the database.
-    for (var i = 0, defer = []; i < 4; i++) {
-      let p = Product.create({
-        name: faker.commerce.productName(),
-        price: faker.commerce.price(),
-        description: faker.lorem.sentence()
-      })
-      defer.push(p);
-    }
-
-    return Promise.all(defer).then((arr) => {
-      return arr = arr.map(function(item) {
-        return {
-          item: item._id,
-          quantity: 1,
-        }
-      })
-    })
-  }
-
-  function newFakeUser() {
-
-    // Make a fake user, registered in the database.
-    let user = {
-      name: faker.fake('{{name.firstName}}, {{name.lastName}}'),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-    };
-    return User.create(user);
-  };
-
-  function clearDatabase() {
-
-    let userP = User.remove({}).exec()
-    let cartP = Cart.remove({}).exec()
-    let productP = Product.remove({}).exec()
-
-    return Promise.join(productP, userP, cartP);
-  };
-
-
-
-
-
   afterEach((done) => {
-    clearDatabase().then(() => {
+    testHelper.clearDatabase().then(() => {
       done();
     })
   })
@@ -76,25 +35,35 @@ describe('cartCtrl', () => {
   var testUser, testCart;
   beforeEach((done) => {
 
-    clearDatabase().then(() => {
-      Promise.join(newFakeUser(), newFakeProducts(), (user, products) => {
-        testUser = user;
-        testCart = {
-          products: products
-        }
+    testHelper.clearDatabase()
+    .then(() => {
+      Promise.join(
+        testHelper.makeFakeUserAndSave(),
+        testHelper.makeFakeProductsAndSave(),
+        (user, products) => {
 
-        Cart.create(testCart)
-        .then((cart) => {
-          testUser.cart = cart._id;
-          return testUser;
-          done();
-        })
-        .then((user) => {
-          user.save((err, s) => {
-            if (err) console.log(err);
+
+          testUser = user;
+          testCart = {
+            products: products
+          }
+
+          Cart.create(testCart)
+
+
+          .then((cart) => {
+            testUser.cart = cart._id;
+            return testUser;
             done();
           })
-        })
+
+
+          .then((user) => {
+            user.save((err, s) => {
+              if (err) console.log(err);
+              done();
+            })
+          })
 
       })
     })

@@ -36,7 +36,7 @@ app.post('/api/cart/:id', cart.create);
 
 app.get('/products', products.index);
 app.get('/products/:id', products.show);
-app.get('/api/order', orders.show);
+app.get('/api/order/:id', orders.show);
 app.get('/api/user/:id', users.show);
 app.get('/api/cart/:id', cart.show);
 

@@ -4,7 +4,7 @@ const productSchema = require('./productSchema');
 
 var orderSchema = new mongoose.Schema({
   user: {type: String, required: true},
-  products: [productSchema]
+  products: []
 })
 
-module.exports = orderSchema;
+module.exports = mongoose.model('Order', orderSchema);
