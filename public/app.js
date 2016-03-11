@@ -6,7 +6,12 @@ angular.module('ecommerce', ['ui.router'])
     .state('home', {
       url: '/',
       templateUrl: './views/home.html',
-      controller: 'mainCtrl'
+      controller: 'mainCtrl',
+      resolve: {
+        userInfoTest: function(userService) {
+          return userService.getUserInfo();
+        }
+      }
     })
     .state('products', {
       url: '/products',

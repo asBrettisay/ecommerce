@@ -8,22 +8,22 @@
   </head>
   <body>
 
-    <div class="container" ng-controller="nav">
+    <div class="container" ng-controller="nav as nav">
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills">
 
             <li role="presentation"
-            ng-class="{active: isActive('home')}"
+            ng-class="{active: nav.isActive('home')}"
             ><a href="#">Home</li></a>
 
             <li role="presentation"
-            ng-class="{active: isActive('products')}"
+            ng-class="{active: nav.isActive('products')}"
             ><a ui-sref="products">Products</li></a>
 
             <li
             role="presentation"
-            ng-class="{active: isActive('admin')}"
+            ng-class="{active: nav.isActive('admin')}"
             ><a
             ui-sref="admin"
             ui-sref-opts="{reload: true}"
@@ -34,6 +34,17 @@
             class="pull-right"
             ng-class="{active: isActive('cart')}"
             ><a ui-sref="cart">Cart</li></a>
+
+            <li
+            class="pull-right"
+            ng-class="{active: nav.isActive('profile')}"
+            >
+            <a ui-sref="profile">
+            {{ userInfo }}
+            </a>
+            </li>
+
+
 
           </ul>
         </nav>
